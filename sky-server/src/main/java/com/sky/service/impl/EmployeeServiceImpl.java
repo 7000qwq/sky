@@ -85,11 +85,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setStatus(StatusConstant.ENABLE);
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        //employee.setCreateTime(LocalDateTime.now());
+        //employee.setUpdateTime(LocalDateTime.now());
 
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        //employee.setCreateUser(BaseContext.getCurrentId());
+        //employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
@@ -112,6 +112,62 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
         return new PageResult(total, records);
+    }
+
+    /**
+     * 员工账号状态更改
+     * @param status
+     * @param id
+     */
+    @Override
+    public void StartOrStop(Integer status, Long id) {
+
+        /**
+         *         Employee employee = new Employee();
+         *         employee.setId(id);
+         *         employee.setStatus(status);
+         */
+
+        Employee employee = Employee.builder()
+                        .id(id)
+                        .status(status)
+                        .build();
+
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查询员工
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getByID(Long id) {
+
+        Employee employee = employeeMapper.getByID(id);
+        employee.setPassword("****");
+        return employee;
+    }
+
+    /**
+     * 更新员工信息
+     * @param employeeDTO
+     */
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+
+        Employee employee = Employee.builder()
+                .id(employeeDTO.getId())
+                .username(employeeDTO.getUsername())
+                .name(employeeDTO.getName())
+                .phone(employeeDTO.getPhone())
+                .sex(employeeDTO.getSex())
+                .idNumber(employeeDTO.getIdNumber())
+                //.updateTime(LocalDateTime.now())
+                //.updateUser(BaseContext.getCurrentId())
+                .build();
+
+        employeeMapper.update(employee);
     }
 
 
