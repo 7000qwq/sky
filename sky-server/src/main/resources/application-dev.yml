@@ -8,6 +8,6 @@ sky:
     password: 11Hope17!
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5t63FBNYAnsYTppm2MkU
-    access-key-secret: m6AqaqQkdDTYUFYffqHRINK4e6ntHu
+    access-key-id: LTAI5tL858u4p3N9Muugv4Ur
+    access-key-secret:
     bucket-name: sky-itcast-7000

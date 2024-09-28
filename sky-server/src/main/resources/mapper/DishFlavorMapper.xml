@@ -9,6 +9,22 @@
         <foreach collection="flavors" item="df" separator=",">
             (#{df.dishId}, #{df.name}, #{df.value})
         </foreach>
-
     </insert>
+
+
+    <update id="update">
+        update dish_flavor
+        <set>
+
+        </set>
+        where dish_id = #{}
+    </update>
+
+
+    <delete id="deleteBatch">
+        delete from dish_flavor where dish_id in
+        <foreach collection="ids" item="dishId" separator="," open="(" close=")">
+            #{dishId}
+        </foreach>
+    </delete>
 </mapper>
