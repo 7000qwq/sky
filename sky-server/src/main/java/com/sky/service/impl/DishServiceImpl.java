@@ -66,6 +66,7 @@ public class DishServiceImpl implements DishService {
     public PageResult page(DishPageQueryDTO dishPageQueryDTO) {
         PageHelper.startPage(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize());
 
+        //为什么这里面放VO？？这样会把不需要return的口味list也返回啊，不需要就不需要，只要有需要的就行
         Page<DishVO> page = dishMapper.page(dishPageQueryDTO);
 
         Long total = page.getTotal();
@@ -149,5 +150,13 @@ public class DishServiceImpl implements DishService {
             );
             dishFlavorMapper.insertBatch(flavors);
         }
+    }
+
+    @Override
+    public List<Dish> getByCategoryId(Long categoryId) {
+
+        List<Dish> dishList = dishMapper.getByCategoryId(categoryId);
+
+        return dishList;
     }
 }

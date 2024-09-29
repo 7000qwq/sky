@@ -43,4 +43,6 @@ public interface DishService {
      * @param dishDTO
      */
     void update(DishDTO dishDTO);
+
+    List<Dish> getByCategoryId(Long categoryId);
 }
