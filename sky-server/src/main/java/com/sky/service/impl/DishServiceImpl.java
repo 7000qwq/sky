@@ -148,6 +148,9 @@ public class DishServiceImpl implements DishService {
                         dishFlavor.setDishId(dishId);
                     }
             );
+            //这是update，会把菜品id传过来，没必要set吧？
+            //卧槽，为什么一定要set呢
+
             dishFlavorMapper.insertBatch(flavors);
         }
     }
@@ -158,5 +161,12 @@ public class DishServiceImpl implements DishService {
         List<Dish> dishList = dishMapper.getByCategoryId(categoryId);
 
         return dishList;
+    }
+
+    @Override
+    public void StartOrStop(Integer status, Long id) {
+        Dish dish = dishMapper.getById(id);
+        dish.setStatus(status);
+        dishMapper.update(dish);
     }
 }

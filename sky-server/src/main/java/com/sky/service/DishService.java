@@ -45,4 +45,11 @@ public interface DishService {
     void update(DishDTO dishDTO);
 
     List<Dish> getByCategoryId(Long categoryId);
+
+    /**
+     * 更改菜品售卖状态
+     * @param status
+     * @param id
+     */
+    void StartOrStop(Integer status, Long id);
 }

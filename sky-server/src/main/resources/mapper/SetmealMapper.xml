@@ -10,6 +10,30 @@
     </insert>
 
 
+    <update id="update">
+        update setmeal
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+            <if test="status != null">status = #{status}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <delete id="deleteBatch">
+        delete from setmeal where id in
+        <foreach collection="ids" item="id_setmeal" separator="," open="(" close=")">
+            #{id_setmeal}
+        </foreach>
+    </delete>
+
+
     <select id="page" resultType="com.sky.vo.SetmealVO">
         select s.*, c.name categoryName from setmeal s left join category c on s.category_id = c.id
         <where>

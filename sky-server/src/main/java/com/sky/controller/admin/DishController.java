@@ -90,4 +90,12 @@ public class DishController {
 
         return Result.success(dishList);
     }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("更改菜品售卖状态")
+    public Result StartOrStop(@PathVariable Integer status, Long id){
+        log.info("更改id为: {}的菜品售卖状态为: {}", id, status);
+        dishService.StartOrStop(status, id);
+        return Result.success();
+    }
 }
