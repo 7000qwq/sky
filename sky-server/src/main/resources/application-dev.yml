@@ -6,13 +6,19 @@ sky:
     database: sky_take_out
     username: root
     password: 11Hope17!
+
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
     access-key-id: LTAI5tL858u4p3N9Muugv4Ur
     access-key-secret:
     bucket-name: sky-itcast-7000
+
   redis:
     host: localhost
     port: 6379
     password: hope1117
     database: 0
+
+  wechat:
+    appid: wx5e2f5a8193f4c12a
+    secret:
