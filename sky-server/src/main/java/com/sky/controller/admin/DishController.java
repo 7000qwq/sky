@@ -11,15 +11,20 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/dish")
 @Api(tags = "菜品相关接口")
 @Slf4j
 public class DishController {
+
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @Autowired
     private DishService dishService;
@@ -31,7 +36,7 @@ public class DishController {
         log.info("新增菜品:{}", dishDTO);
 
         dishService.save(dishDTO);
-
+        cleanByCategoryId(dishDTO.getCategoryId());
         return Result.success();
     }
 
@@ -54,7 +59,7 @@ public class DishController {
         log.info("菜品批量删除：{}", ids);
 
         dishService.deleteBatch(ids);
-
+        cleanAll();
         return Result.success();
     }
 
@@ -76,7 +81,7 @@ public class DishController {
         log.info("更新菜品数据: {}", dishDTO);
 
         dishService.update(dishDTO);
-
+        cleanAll();
         return Result.success();
     }
 
@@ -96,6 +101,17 @@ public class DishController {
     public Result StartOrStop(@PathVariable Integer status, Long id){
         log.info("更改id为: {}的菜品售卖状态为: {}", id, status);
         dishService.StartOrStop(status, id);
+        cleanAll();
         return Result.success();
+    }
+
+    public void cleanByCategoryId(Long categoryId){
+        redisTemplate.delete("dish_" + categoryId.toString());
+    }
+
+    public void cleanAll(){
+        //删除不能直接用通配符
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
     }
 }
