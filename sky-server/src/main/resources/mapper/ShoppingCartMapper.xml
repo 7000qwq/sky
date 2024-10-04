@@ -4,6 +4,16 @@
 <mapper namespace="com.sky.mapper.ShoppingCartMapper">
 
 
+    <insert id="insertBatch">
+        insert into shopping_cart
+        (name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount)
+        value
+        <foreach collection="byOrderId" item="od" separator=",">
+            (#{od.name}, #{od.image}, #{od.userId}, #{od.dishId}, #{od.setmealId}, #{od.dishFlavor}, #{od.number}, #{od.amount})
+        </foreach>
+    </insert>
+
+
     <update id="update">
         update shopping_cart set number = number + 1
         <where>

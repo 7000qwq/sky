@@ -1,5 +1,6 @@
 package com.sky.controller.user;
 
+import com.sky.context.BaseContext;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
 import com.sky.dto.OrdersSubmitDTO;
@@ -16,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("userOrderController")
 @RequestMapping("/user/order")
 @Api(tags = "订单相关接口")
 @Slf4j
@@ -63,6 +64,8 @@ public class OrderController {
     @ApiOperation("分页查询历史订单")
     public Result<PageResult> queryHistory(OrdersPageQueryDTO ordersPageQueryDTO){
         log.info("订单分页查询: {}", ordersPageQueryDTO);
+        Long userId = BaseContext.getCurrentId();
+        ordersPageQueryDTO.setUserId(userId);
         PageResult pageResult = orderService.pageQuery(ordersPageQueryDTO);
         return Result.success(pageResult);
     }
@@ -83,6 +86,14 @@ public class OrderController {
 
         orderService.cancelOrder(id);
 
+        return Result.success();
+    }
+
+    @PostMapping("repetition/{id}")
+    @ApiOperation("再来一单")
+    public Result againOrder(@PathVariable Long id){
+        log.info("再来一单: {}", id);
+        orderService.againOrder(id);
         return Result.success();
     }
 }
