@@ -7,6 +7,7 @@ import com.sky.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
@@ -46,4 +47,7 @@ public interface OrdersMapper {
 
     @Select("select * from orders where status = #{status}")
     List<Orders> getByStatus(Integer status);
+
+    @Select("select * from orders where DATE(order_time) = #{date}")
+    List<Orders> getByDate(LocalDate date);
 }
