@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrdersMapper {
@@ -50,4 +51,11 @@ public interface OrdersMapper {
 
     @Select("select * from orders where DATE(order_time) = #{date}")
     List<Orders> getByDate(LocalDate date);
+
+    @Select("select * from orders where DATE(order_time) >= #{begin} and DATE(order_time) <= #{end} and status = 5")
+    List<Orders> getByDateDur(LocalDate begin, LocalDate end);
+
+    Integer countByMap(Map map);
+
+    Double sumByMap(Map map);
 }
